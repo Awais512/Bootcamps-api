@@ -9,6 +9,7 @@ const errorHandler = require('./middlewares/error');
 
 //Route Files
 const bootcampRoutes = require('./routes/bootcampRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 //Connect to Database
 connectDb();
@@ -18,11 +19,8 @@ app.use(morgan('dev'));
 
 //Mount the routes
 app.use('/api/v1/bootcamp', bootcampRoutes);
+app.use('/api/v1/course', courseRoutes);
 app.use(errorHandler);
-
-app.get('/', (req, res) => {
-  res.json({ msg: 'Helloo World' });
-});
 
 //Server Code
 const PORT = process.env.PORT || 5000;
