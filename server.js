@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 const connectDb = require('./config/db');
+const errorHandler = require('./middlewares/error');
 
 //Route Files
 const bootcampRoutes = require('./routes/bootcampRoutes');
@@ -17,6 +18,7 @@ app.use(morgan('dev'));
 
 //Mount the routes
 app.use('/api/v1/bootcamp', bootcampRoutes);
+app.use(errorHandler);
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Helloo World' });

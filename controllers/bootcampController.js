@@ -30,7 +30,7 @@ exports.getBootcamps = async (req, res) => {
 //@desc     Get single Bootcamp
 //@route    GET /api/v1/bootcamp/:id
 //@access   Private
-exports.getBootcamp = async (req, res) => {
+exports.getBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.findById(req.params.id);
     if (!bootcamp) {
@@ -38,8 +38,7 @@ exports.getBootcamp = async (req, res) => {
     }
     res.json({ success: true, data: bootcamp });
   } catch (err) {
-    res.status(400).json({ success: false });
-    console.log(err);
+    next(err);
   }
 };
 
