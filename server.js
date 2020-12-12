@@ -25,13 +25,19 @@ app.get('/', (req, res) => {
 });
 
 //Server Code
-const PORT = process.env.PORT;
-app.listen(PORT, () =>
-  console.log(`Server is listening on Port ${process.env.PORT}`.yellow.bold)
+const PORT = process.env.PORT || 5000;
+
+const server = app.listen(
+  PORT,
+  console.log(
+    `Server is running in ${process.env.NODE_ENV} mode on port: ${PORT}`.yellow
+      .bold
+  )
 );
 
-//Handle Unhandle Rejection
-process.on('unhandledRejection', (err, promise) => {
-  console.log(`Error: ${err.message}`.red);
-  Server.close(() => process.exit(1));
+process.on('unhndledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  server.close(() => {
+    process.exit(1);
+  });
 });

@@ -5,10 +5,14 @@ const ErrorResponse = require('../utils/errorResponse');
 //@desc     Create Bootcamp
 //@route    POST /api/v1/bootcamp
 //@access   Private
-exports.createBootcamp = async (req, res) => {
+exports.createBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.create(req.body);
-    res.status(201).json({ success: true, data: bootcamp });
+
+    res.status(201).json({
+      success: true,
+      data: bootcamp,
+    });
   } catch (err) {
     next(err);
   }
