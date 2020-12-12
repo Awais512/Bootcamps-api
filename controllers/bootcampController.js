@@ -47,42 +47,19 @@ exports.getBootcamp = async (req, res) => {
 //@route    PUT /api/v1/bootcamp/:id
 //@access   Private
 exports.updateBootcamp = async (req, res) => {
-  // const {
-  //   name,
-  //   description,
-  //   website,
-  //   phone,
-  //   email,
-  //   address,
-  //   careers,
-  //   housing,
-  //   jobAssistance,
-  //   jobGuarantee,
-  //   acceptGi,
-  // } = req.body;
-  // try {
-  //   const bootcamp = await Bootcamp.findByIdAndUpdate(
-  //     req.params.id,
-  //     {
-  //       name,
-  //       description,
-  //       website,
-  //       phone,
-  //       email,
-  //       address,
-  //       careers,
-  //       housing,
-  //       jobAssistance,
-  //       jobGuarantee,
-  //       acceptGi,
-  //     },
-  //     { new: true }
-  //   );
-  //   res.json({ success: true, data: bootcamp });
-  // } catch (error) {
-  //   res.status(400).json({ success: false });
-  //   console.log(err);
-  // }
+  try {
+    const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!bootcamp) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: bootcamp });
+  } catch (err) {
+    res.status(400).json({ success: false });
+    console.log(err);
+  }
 };
 
 //@desc     Delete Bootcamp
