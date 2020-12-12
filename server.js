@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const colors = require('colors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
@@ -24,5 +25,11 @@ app.get('/', (req, res) => {
 //Server Code
 const PORT = process.env.PORT;
 app.listen(PORT, () =>
-  console.log(`Server is listening on Port ${process.env.PORT}`)
+  console.log(`Server is listening on Port ${process.env.PORT}`.yellow.bold)
 );
+
+//Handle Unhandle Rejection
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`.red);
+  Server.close(() => process.exit(1));
+});

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const colors = require('colors');
 
 const connectDb = async () => {
   const URL = process.env.MONGO_URI;
@@ -10,7 +11,7 @@ const connectDb = async () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    console.log('MongoDb is connected');
+    console.log('MongoDb is connected'.blue.bold);
   } catch (error) {
     console.log(error.message);
   }
