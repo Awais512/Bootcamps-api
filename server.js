@@ -4,6 +4,7 @@ const app = express();
 const colors = require('colors');
 const morgan = require('morgan');
 const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 const connectDb = require('./config/db');
@@ -18,6 +19,7 @@ const authRoutes = require('./routes/authController');
 connectDb();
 
 app.use(express.json());
+app.use(cookieParser());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
