@@ -12,6 +12,7 @@ const errorHandler = require('./middlewares/error');
 //Route Files
 const bootcampRoutes = require('./routes/bootcampRoutes');
 const courseRoutes = require('./routes/courseRoutes');
+const authRoutes = require('./routes/authController');
 
 //Connect to Database
 connectDb();
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Mount the routes
 app.use('/api/v1/bootcamp', bootcampRoutes);
 app.use('/api/v1/course', courseRoutes);
+app.use('/api/v1/auth', authRoutes);
 app.use(errorHandler);
 
 //Server Code
