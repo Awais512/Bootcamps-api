@@ -13,7 +13,7 @@ const errorHandler = require('./middlewares/error');
 //Route Files
 const bootcampRoutes = require('./routes/bootcampRoutes');
 const courseRoutes = require('./routes/courseRoutes');
-const authRoutes = require('./routes/authController');
+const authRoutes = require('./routes/authRoutes');
 
 //Connect to Database
 connectDb();
