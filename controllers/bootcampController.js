@@ -8,6 +8,20 @@ const path = require('path');
 //@route    POST /api/v1/bootcamp
 //@access   Private
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
+  //Add user to req.body
+  req.body.user = req.user.id;
+
+  //Check for published bootcamps
+  const publishedBootcamp = await Bootcamp.findOne({ user: req.user.id });
+
+  if (publishedBootcamp && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `The user with the id ${req.user.id} has already published a bootcamp`
+      )
+    );
+  }
+
   const bootcamp = await Bootcamp.create(req.body);
 
   res.status(201).json({
