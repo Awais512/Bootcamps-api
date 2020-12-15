@@ -15,6 +15,7 @@ const bootcampRoutes = require('./routes/bootcampRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 //Connect to Database
 connectDb();
@@ -35,6 +36,7 @@ app.use('/api/v1/bootcamp', bootcampRoutes);
 app.use('/api/v1/course', courseRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
 app.use(errorHandler);
 
 //Server Code
