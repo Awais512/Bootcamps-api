@@ -3,7 +3,6 @@ const Bootcamp = require('../models/bootcampModel');
 
 const asyncHandler = require('express-async-handler');
 const ErrorResponse = require('../utils/errorResponse');
-const { findByIdAndUpdate } = require('../models/courseModel');
 
 //@desc     Get all Courses
 //@route    GET /api/v1/bootcamp
