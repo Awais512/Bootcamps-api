@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
+const crypto = require('crypto');
 const ErrorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail');
 
@@ -98,6 +99,34 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     success: true,
     data: user,
   });
+});
+
+//@desc     Reset Password
+//@route    PUT /api/v1/auth/resetpassword/:resettoken
+//@access   Public
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+  //Get Hashed Token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resettoken)
+    .digest('hex');
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new ErrorResponse('Invalid token', 400));
+  }
+
+  //Set New Password
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
 });
 
 //Get token from model, Create cookie and send response
