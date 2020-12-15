@@ -145,6 +145,15 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     );
   }
 
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.params.id} is not authorized to updaate this bootcamp`,
+        400
+      )
+    );
+  }
+
   if (!req.files) {
     return next(new ErrorResponse(`Please upload a photo`, 400));
   }
