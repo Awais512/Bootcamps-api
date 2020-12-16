@@ -4,8 +4,10 @@ const app = express();
 const colors = require('colors');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 const connectDb = require('./config/db');
@@ -32,6 +34,12 @@ app.use(fileupload());
 
 //Sanitize data
 app.use(mongoSanitize());
+
+//Set Security Headers
+app.use(helmet());
+
+//Prevent xss attack
+app.use(xss());
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
