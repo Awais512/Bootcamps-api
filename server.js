@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const colors = require('colors');
 const morgan = require('morgan');
+const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
@@ -40,6 +43,20 @@ app.use(helmet());
 
 //Prevent xss attack
 app.use(xss());
+
+//Rate Limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 100,
+});
+
+app.use(limiter);
+
+//Prevent http param pollution
+app.use(hpp());
+
+//Enable Cors
+app.use(cors());
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
